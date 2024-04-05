@@ -82,9 +82,12 @@ class ISODATA:
             if self.compare2Array(self.current_threshold,self.previous_threshold) or self.compare2Array(self.current_means,self.previous_means):
                 return self.current_threshold,self.current_means,self.areas_array
             else:
+                print('\n\n')
+                print(f'Current threshold : {self.current_threshold}')
+                print(f'Previous threshold: {self.previous_threshold}')
                 print('\n')
-                print(f'Current : {self.current_threshold}')
-                print(f'Previous : {self.previous_threshold}')
+                print(f'Current means : {self.current_means}')
+                print(f'Previous means: {self.previous_means}')
                 self.previous_means = self.current_means
                 self.previous_threshold = self.current_threshold
         # print(self.current_means)
@@ -95,7 +98,7 @@ class ISODATA:
         
 
 if __name__ == "__main__":
-    app = ISODATA(cv.imread('./photos/peanuts.jpg'),10)
+    app = ISODATA(cv.imread('./photos/peanuts.jpg'),18)
     app.executeProgram()
     
             
