@@ -51,7 +51,6 @@ class ISODATA:
         else:
             return False
     def executeProgram(self):
-        status = False
         while True:
             #- Khởi tạo lại Mảng chứa ngưỡng hiện tại
             self.current_threshold = np.zeros(shape=self.K+1)
@@ -99,7 +98,16 @@ class ISODATA:
 
 if __name__ == "__main__":
     app = ISODATA(cv.imread('./photos/peanuts.jpg'),18)
-    app.executeProgram()
+    arr_threshold,arr_means,arr_areas = app.executeProgram()
+    #Ví dụ muốn show vùng thứ 5/18
+    area_5th = arr_areas[4].astype(np.uint8)
+    #Bitwise với ảnh gray
+    gray = cv.imread('./photos/peanuts.jpg',0)
+    image = cv.bitwise_and(area_5th,gray,mask=None)
+    cv.imshow('Image',image)
+    if cv.waitKey(0) == ord('q'):
+        print('Quit')
+        sys.exit()
     
             
         
