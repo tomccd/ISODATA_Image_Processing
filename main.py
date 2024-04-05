@@ -79,6 +79,14 @@ class ISODATA:
                     self.current_threshold[x] = (self.current_means[x-1]+self.current_means[x])/2
             #- Thực hiện so sánh giá trị giữa mảng ngưỡng hiện tại và mảng ngưỡng quá khứ, đồng thời cả mảng giá trị trung bình hiện tại và quá khứ
             if self.compare2Array(self.current_threshold,self.previous_threshold) or self.compare2Array(self.current_means,self.previous_means):
+                print('\n\n')
+                print(f'Current threshold : {self.current_threshold}')
+                print(f'Previous threshold: {self.previous_threshold}')
+                print('\n')
+                print(f'Current means : {self.current_means}')
+                print(f'Previous means: {self.previous_means}')
+                self.previous_means = self.current_means
+                self.previous_threshold = self.current_threshold
                 return self.current_threshold,self.current_means,self.areas_array
             else:
                 print('\n\n')
