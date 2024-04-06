@@ -38,7 +38,7 @@ class ISODATA:
         if isinstance(arr_1,np.ndarray)  and isinstance(arr_2,np.ndarray):
             count = 0
             for x in range(len(arr_1)):
-            #- Nếu trị tuyệt đối của hiệu 2 phần từ nằm trong dải từ 0.1 đến 0.9, ta coi như là 2 số đó bằng nhau
+            #- Nếu trị tuyệt đối của hiệu 2 phần từ nằm trong dải từ 1 đến 2, ta coi như là 2 số đó bằng nhau
                 condition1 = np.abs(arr_1[x]-arr_2[x]) >= 0.0
                 condition2 = np.abs(arr_1[x]-arr_2[x]) < 2.0
                 #- I dunno why I used this thing. Link : https://numpy.org/doc/stable/reference/generated/numpy.logical_and.html
@@ -107,7 +107,7 @@ class ISODATA:
             
         
 if __name__ == "__main__":
-    app = ISODATA(cv.imread('./photos/peanuts.jpg'),40)
+    app = ISODATA(cv.imread('./photos/trang.jpg'),50)
     arr_threshold,arr_means,arr_areas = app.executeProgram()
     arr_threshold = arr_threshold.tolist()
     gray = cv.imread('./photos/trang.jpg',0)
