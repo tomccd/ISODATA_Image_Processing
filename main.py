@@ -82,8 +82,8 @@ class ISODATA:
                 print('\n\n')
                 print(f'Current threshold : {self.current_threshold}')
                 print(f'Previous threshold: {self.previous_threshold}')
-                # print(f'Current means : {self.current_means}')
-                # print(f'Previous means: {self.previous_means}')
+                print(f'Current means : {self.current_means}')
+                print(f'Previous means: {self.previous_means}')
                 print('Executing ISODATA Completed')
                 break
             #-Cập nhật giá trị ngưỡng hiện tại = qúa khứ phòng trường hợp giá trị trung bình 2 bên bằng nhau
@@ -99,8 +99,8 @@ class ISODATA:
                 print(f'Current threshold : {self.current_threshold}')
                 print(f'Previous threshold: {self.previous_threshold}')
                 print('\n')
-                # print(f'Current means : {self.current_means}')
-                # print(f'Previous means: {self.previous_means}')
+                print(f'Current means : {self.current_means}')
+                print(f'Previous means: {self.previous_means}')
                 self.previous_means = self.current_means
                 self.previous_threshold = self.current_threshold
         # print(self.current_means)
@@ -108,8 +108,10 @@ class ISODATA:
         self.execute_ISODATA_Algorithm()
         #Trong khi ngưỡng lớn thứ nhì và ngưỡng lớn thứ nhất có độ chênh lệch mức sáng là 10 (do ánh trăng sáng)
         while np.abs(self.current_threshold[self.K]-self.current_threshold[self.K-1]) >=20:
-            #-Cập nhật giá trị T0 bằng với giá trị lớn thứ nhì
+            #-Cập nhật giá trị T0 bằng với giá trị lớn thứ nhì trong mảng ngưỡng hiện tại 
             self.min_threshold = self.current_threshold[self.K-1]
+            #-Reset giá trị ngưỡng quá khứ
+            self.previous_means = np.zeros(shape=self.K) #Mảng chứa giá trị trung bình quá khứ
             #Khởi tạo lại ngưỡng quá khứ theo giá trị T0 mới 
             for x in range(self.K+1):
                 if x == 0:
