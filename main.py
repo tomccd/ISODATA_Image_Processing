@@ -40,7 +40,7 @@ class ISODATA:
             for x in range(len(arr_1)):
             #- Nếu trị tuyệt đối của hiệu 2 phần từ nằm trong dải từ 0 đến 5, ta coi như là 2 số đó bằng nhau
                 condition1 = np.abs(arr_1[x]-arr_2[x]) >= 0.0
-                condition2 = np.abs(arr_1[x]-arr_2[x]) <= 5.0
+                condition2 = np.abs(arr_1[x]-arr_2[x]) <= 8.0
                 #- I dunno why I used this thing. Link : https://numpy.org/doc/stable/reference/generated/numpy.logical_and.html
                 if np.logical_and(condition1,condition2):
                     count+=1
@@ -49,7 +49,7 @@ class ISODATA:
             else:
                 return False
         else:
-            return False
+            raise ValueError("Wrong Input")
     def executeProgram(self):
         while True:
             #- Khởi tạo lại Mảng chứa ngưỡng hiện tại
@@ -102,18 +102,23 @@ class ISODATA:
                 self.previous_means = self.current_means
                 self.previous_threshold = self.current_threshold
         # print(self.current_means)
-                
+    def transferGrayImage2Binary(self,img_arr):
+        if isinstance(img_arr,np.ndarray) == False:
+            raise ValueError("Sai kích thước đầu vào")
+        else:
+            for y in range(self.height):
+                for x in range(self.width):
+                    if img_arr[y][x]>0:
+                        img_arr[y][x] = 255
+            return img_arr
                             
             
         
 if __name__ == "__main__":
-    app = ISODATA(cv.imread('./photos/trang.jpg'),4)
-    arr_threshold,arr_means,arr_areas = app.executeProgram()
-    arr_threshold = arr_threshold.tolist()
-    gray = cv.imread('./photos/trang.jpg',0)
-    #Ta cần ảnh của mặt trăng, do đó ta sẽ sử dụng lớp cuối cùng để biến đổi về thành ảnh nhị phân (do giá trị giữa 2 khoảng ngưỡng đó là lớn nhất và mặt trăng lại sáng nhất)
-    thres,binary_image = cv.threshold(gray,int(arr_threshold[app.K-1]),int(arr_threshold[app.K]),cv.THRESH_BINARY)
-    cv.imshow('Image',binary_image)
+    app = ISODATA(cv.imread('./photos/brick.jpg'),5)
+    _,_,arr_areas = app.executeProgram()
+    binary_image = app.transferGrayImage2Binary(arr_areas[app.K-3])
+    cv.imshow('Image',binary_image.astype(np.uint8))
     if cv.waitKey(0) == ord('q'):
         print('Quit')
         sys.exit()
